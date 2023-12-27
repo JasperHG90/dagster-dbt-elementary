@@ -1,0 +1,23 @@
+formatter: "markdown table"
+
+recursive:
+  enabled: true
+  path: modules
+
+settings:
+  hide-empty: true
+  indent: 3
+
+sections:
+  hide: ['providers', 'requirements']
+
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    ## Terraform Documentation
+    Below is the automatically generated Terraform documentation.
+
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
