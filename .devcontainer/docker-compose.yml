@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  app:
+    # Using a Dockerfile is optional, but included for completeness.
+    build: 
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
+      - ..:/home/vscode/workspace:cached
+
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
+      # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
+      #- /var/run/docker.sock:/var/run/docker.sock 
+
+    # Runs app on the same network as the service container, allows "forwardPorts" in devcontainer.json function.
+    #network_mode: service:another-service
+    
+    # Uncomment the next line to use a non-root user for all processes - See https://aka.ms/vscode-remote/containers/non-root for details.
+    # user: vscode
+
+  postgres:
+    image: postgres:16.1
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - "5432:5432"

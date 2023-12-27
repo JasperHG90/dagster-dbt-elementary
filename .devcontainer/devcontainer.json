@@ -1,0 +1,49 @@
+{
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "containerEnv": {
+    "DBT_PROFILES_DIR": "/home/vscode/workspace/.dbt",
+    "DBT_PROJECT_DIR": "/home/vscode/workspace/dbt_project",
+    "HOME": "/home/vscode"
+  },
+  "remoteUser": "vscode", 
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance",
+        "marp-team.marp-vscode",
+        "redhat.vscode-yaml",
+        "innoverio.vscode-dbt-power-user",
+        "mhutchie.git-graph",
+        "4ops.terraform",
+        "betajob.modulestf"
+      ],
+      "settings": {
+        "[jinja-sql]": {
+          "editor.defaultFormatter": "innoverio.vscode-dbt-power-user",
+          "editor.formatOnSave": true
+        },
+        "files.associations": {
+          "*.sql": "jinja-sql",
+          "*.yml": "jinja-yaml"
+        },
+        "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python",
+        "python.interpreter.infoVisibility": "always"
+      }
+    }
+  },
+  // "forwardPorts": [
+  //   8080
+  // ],
+  // "mounts": [
+  //   "source=${localEnv:HOME}/.ssh/github,target=/home/vscode/.ssh/id_rsa,type=bind,consistency=cached",
+  //   "source=${localEnv:HOME}/.ssh/github.pub,target=/home/vscode/.ssh/id_rsa.pub,type=bind,consistency=cached"
+  // ],
+  // "postAttachCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  // "postStartCommand": "cp /home/vscode/workspace/.gitconfig /home/vscode/.gitconfig",
+  "workspaceFolder": "/home/vscode/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind"
+  //"overrideCommand": true
+}
