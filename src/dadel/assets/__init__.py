@@ -7,7 +7,7 @@ from dadel.IO.resources import LuchtMeetNetResource
 from dadel.transformations import groupby_min_max_normalize
 from dadel.utils import split_df_column
 
-from dadel.partitions import daily_station_partition, daily_partition
+from dadel.jobs import daily_station_partition, daily_partition
 
 
 @asset(
