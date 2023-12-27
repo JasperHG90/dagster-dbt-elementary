@@ -2,9 +2,8 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
 ENV GIT_PYTHON_REFRESH=quiet
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PYTHON_VERSION=3.9
+ENV PYTHON_VERSION=3.10
 ENV HOME="/home/vscode"
-ENV PYENV_ROOT="$HOME/.pyenv"
 
 # Just
 RUN wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | sudo tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null \
@@ -17,16 +16,20 @@ RUN wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg 
 RUN apt-get update \
     && apt-get -y install libsqlite3-dev libffi-dev \
     && rm -rf /var/lib/apt/lists/*
-RUN curl https://pyenv.run | bash
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
-RUN echo 'eval "$(pyenv init -)"' >> /home/vscode/.bashrc
-RUN pyenv install ${PYTHON_VERSION}
-RUN pyenv global ${PYTHON_VERSION}
-RUN pyenv rehash
+RUN apt-get update && apt-get install -y \
+    software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get install -y python${PYTHON_VERSION} \
+        python${PYTHON_VERSION}-venv \
+        python3-pip \
+        python${PYTHON_VERSION}-distutils \
+        python3-apt \
+        git && \
+    rm -rf /var/lib/apt/lists/*
 RUN pip install wheel --no-cache-dir --upgrade pip
 
 # Poetry
-RUN curl -sSL https://install.python-poetry.org | python -
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Terraform
 RUN apt-get update \
@@ -41,7 +44,8 @@ RUN apt-get update \
     && apt-get install -y postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m venv /home/vscode/.venv
+RUN python3 -m venv /home/vscode/.venv
+ENV PATH="/home/vscode/.venv/bin:$PATH"
 
 RUN mkdir /home/vscode/.ssh
 RUN chmod -R 777 /home/vscode
