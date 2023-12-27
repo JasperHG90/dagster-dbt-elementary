@@ -1,10 +1,10 @@
-requirements:
-  pip install -r requirements.txt --upgrade pip && dbt deps
+install:
+  poetry install
 
-dev_requirements:
-  pip install -r dev_requirements.txt --upgrade pip
+plugins:
+  poetry self add poetry-git-version-plugin
 
 pre_commit:
-  pre-commit install
+  poetry run pre-commit install
 
-install: requirements dev_requirements pre_commit
+setup: install plugins pre_commit

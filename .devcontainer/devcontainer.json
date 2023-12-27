@@ -25,7 +25,8 @@
         "innoverio.vscode-dbt-power-user",
         "mhutchie.git-graph",
         "4ops.terraform",
-        "betajob.modulestf"
+        "betajob.modulestf",
+        "tamasfe.even-better-toml"
       ],
       "settings": {
         "[jinja-sql]": {
