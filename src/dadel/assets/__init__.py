@@ -1,23 +1,16 @@
-import os
-from typing import Tuple
-
 import pandas as pd
-from dagster import AssetOut, AssetIn, asset, multi_asset, AutoMaterializePolicy, FreshnessPolicy
-from dadel.IO.resources import LuchtMeetNetResource
-from dadel.transformations import groupby_min_max_normalize
-from dadel.utils import split_df_column
+from dagster import AutoMaterializePolicy, asset
 
-from dadel.jobs import daily_station_partition, daily_partition
+from dadel.IO.resources import LuchtMeetNetResource
+from dadel.partitions import daily_station_partition
 
 
 @asset(
     description="Air quality data from the Luchtmeetnet API",
     compute_kind="duckdb",
-    io_manager_key="duckdb_io_landing_zone",
+    io_manager_key="landing_zone",
     partitions_def=daily_station_partition,
-    auto_materialize_policy=AutoMaterializePolicy.eager(
-        max_materializations_per_minute=None
-    )
+    auto_materialize_policy=AutoMaterializePolicy.eager(max_materializations_per_minute=None),
 )
 def air_quality_data(context, luchtmeetnet_api: LuchtMeetNetResource) -> pd.DataFrame:
     date, station = context.partition_key.split("|")

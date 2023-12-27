@@ -1,19 +1,9 @@
 {
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
   "containerEnv": {
     "DBT_PROFILES_DIR": "/home/vscode/workspace/.dbt",
     "DBT_PROJECT_DIR": "/home/vscode/workspace/dbt_project",
     "HOME": "/home/vscode"
   },
-  "remoteUser": "vscode",
-  "features": {
-    "docker-in-docker": {
-        "version": "latest",
-        "moby": true,
-        "dockerDashComposeVersion": "v1"
-    }
-  }, 
   "customizations": {
     "vscode": {
       "extensions": [
@@ -38,13 +28,22 @@
           "*.yml": "jinja-yaml"
         },
         "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python",
-        "python.terminal.activateEnvironment": true,
-        "python.interpreter.infoVisibility": "always"
+        "python.interpreter.infoVisibility": "always",
+        "python.terminal.activateEnvironment": true
       }
     }
   },
+  "dockerComposeFile": "docker-compose.yml",
+  "features": {
+    "docker-in-docker": {
+      "dockerDashComposeVersion": "v1",
+      "moby": true,
+      "version": "latest"
+    }
+  },
   "forwardPorts": [
-    8080
+    8080,
+    3000
   ],
   "mounts": [
     "source=${localEnv:HOME}/.ssh/github,target=/home/vscode/.ssh/id_rsa,type=bind,consistency=cached",
@@ -52,7 +51,7 @@
   ],
   "postAttachCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "postStartCommand": "cp /home/vscode/workspace/.gitconfig /home/vscode/.gitconfig",
-  "workspaceFolder": "/home/vscode/workspace",
-  // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind"
-  //"overrideCommand": true
+  "remoteUser": "vscode",
+  "service": "app",
+  "workspaceFolder": "/home/vscode/workspace"
 }

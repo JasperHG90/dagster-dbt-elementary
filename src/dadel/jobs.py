@@ -1,6 +1,7 @@
-from dag_advanced.assets import air_quality_data
-from dag_advanced.partitions import daily_station_partition
 from dagster import define_asset_job
+
+from dadel.assets import air_quality_data
+from dadel.partitions import daily_station_partition
 
 ingestion_job = define_asset_job(
     name="ingestion_job",
@@ -11,7 +12,7 @@ ingestion_job = define_asset_job(
         "execution": {
             "config": {
                 "multiprocess": {
-                    "max_concurrent": 4,
+                    "max_concurrent": 2,
                 },
             }
         }

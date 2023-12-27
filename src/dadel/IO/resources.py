@@ -1,7 +1,8 @@
 from typing import Any, Dict, List, Optional
 
 from dagster import ConfigurableResource
-from delt.api import get_results_luchtmeetnet_endpoint
+
+from dadel.luchtmeetnet.api import get_results_luchtmeetnet_endpoint
 
 
 class LuchtMeetNetResource(ConfigurableResource):

@@ -10,6 +10,6 @@ pre_commit:
 setup: install plugins pre_commit
 
 dev:
-	mkdir -p .dagster && \
-		cp dagster.yaml .dagster/dagster.yaml && \
-		DAGSTER_HOME="$(pwd)/.dagster" poetry run dagster dev
+  mkdir -p .dagster && mkdir -p .tmp && \
+    cp dagster.yaml $(pwd)/.dagster/dagster.yaml && \
+    DAGSTER_HOME="$(pwd)/.dagster" poetry run dagster dev
