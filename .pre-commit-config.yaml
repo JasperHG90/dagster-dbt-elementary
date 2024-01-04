@@ -34,25 +34,3 @@ repos:
     rev: v5.6.3
     hooks:
       - id: isort
-  - repo: https://github.com/terraform-docs/terraform-docs
-    rev: v0.16.0
-    hooks:
-    - id: terraform-docs-go
-      always_run: true
-      pass_filenames: false
-      args:
-      - infra
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.81.2
-    hooks:
-    - id: terraform_fmt
-      pass_filenames: true
-      always_run: true
-      args:
-      - --args=-recursive
-  - repo: local
-    hooks:
-      - id: terraform validate
-        name: terraform validate
-        entry: bash -c 'cd infra && terraform validate'
-        language: system
